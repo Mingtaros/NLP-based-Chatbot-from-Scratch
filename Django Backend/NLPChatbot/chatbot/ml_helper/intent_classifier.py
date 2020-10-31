@@ -97,7 +97,7 @@ def predict(text):
   # sort value by intent ranking
   intent_ranking = {}
   for each_intent in unique_intents:
-    intent_ranking[each_intent] = prediction_result[intent_map[each_intent]]
+    intent_ranking[each_intent] = float(prediction_result[intent_map[each_intent]])
 
   sorted_intent_ranking = sorted(intent_ranking.items(), key=lambda kv: kv[1], reverse=True)
   
