@@ -17,8 +17,8 @@ class SpellCheckModule:
         self.encoder_model = Model(encoder_inputs, encoder_states)
 
         decoder_inputs = model.input[1]  # input_2
-        decoder_state_input_h = Input(shape=(100,), name="input_dec_h")
-        decoder_state_input_c = Input(shape=(100,), name="input_dec_c")
+        decoder_state_input_h = Input(shape=(150,), name="input_dec_h")
+        decoder_state_input_c = Input(shape=(150,), name="input_dec_c")
         decoder_states_inputs = [decoder_state_input_h, decoder_state_input_c]
         decoder_lstm = model.layers[5]
         decoder_outputs, state_h_dec, state_c_dec = decoder_lstm(
