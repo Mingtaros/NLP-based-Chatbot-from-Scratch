@@ -5,8 +5,9 @@ from rest_framework import status
 
 import json
 
-from .ml_helper.intent_classifier import predict
 from .ml_helper.constants import *
+from .ml_helper.intent_classifier import predict_intent
+from .ml_helper.ner_labeler import predict_ner
 
 
 # Create your views here.
@@ -26,7 +27,7 @@ def get_intent_from_chat(request):
   if ('text' not in data):
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
-  intent_ranking_prediction = predict(data['text'])
+  intent_ranking_prediction = predict_intent(data['text'])
   chosen_intent = list(intent_ranking_prediction.keys())[0]
 
   return JsonResponse({
@@ -43,7 +44,7 @@ def get_ner_result(request): # TBD
   if ('text' not in data):
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
-  ner_prediction = 0 # stub
+  ner_prediction = predict_ner(data['text'])
 
   return JsonResponse({
     "status": HTTP_STATUS_OK,

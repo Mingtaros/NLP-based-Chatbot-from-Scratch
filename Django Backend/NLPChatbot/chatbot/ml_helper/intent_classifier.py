@@ -78,7 +78,7 @@ def initialize_predictor(text):
   return test_ls, max_length, intent_map
 
 
-def predict(text):
+def predict_intent(text):
   test_ls, max_length, intent_map = initialize_predictor(text)
 
   # Check for unknown words
