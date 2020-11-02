@@ -74,8 +74,6 @@ def initialize_predictor(text):
   spell_checker = loadSpellCheck(SPELL_CHECK_MODEL_PATH, SPELL_CHECK_DATA_PATH)
   text = spell_checker.fix_sentence(text)
 
-  print("repaired sentence:", text)
-
   cleaned_text = re.sub(r'[^ a-z A-Z 0-9]', " ", text)
   test_word = word_tokenize(cleaned_text)
   test_word = [w.lower() for w in test_word]

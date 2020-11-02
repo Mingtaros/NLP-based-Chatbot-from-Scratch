@@ -9,6 +9,7 @@ from tensorflow.keras.models import load_model
 
 nltk.download('punkt')
 data_read = read_enamex_file(NER_DATA_PATH)
+model = load_model(NER_MODEL_PATH)
 
 def preprocessData(sentence):
   result = ' '.join(sentence.lower().split('-'))
@@ -72,9 +73,8 @@ def getIndex(data):
 def predict_ner(text):
   for i in range(NER_MAX_LEN - len(text.split(' '))):
     text += ' PADword'
-  model = load_model(NER_MODEL_PATH)
-  spell_checker = loadSpellCheck(SPELL_CHECK_MODEL_PATH, SPELL_CHECK_DATA_PATH)
-  text = spell_checker.fix_sentence(text)
+  # spell_checker = loadSpellCheck(SPELL_CHECK_MODEL_PATH, SPELL_CHECK_DATA_PATH)
+  # text = spell_checker.fix_sentence(text)
 
   test_data = preprocessData(text)
   test_data = encodeXData([test_data])[0]
