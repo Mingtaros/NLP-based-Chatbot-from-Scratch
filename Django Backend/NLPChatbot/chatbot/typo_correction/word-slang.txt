@@ -1,5 +1,11 @@
 absen,absen
 absn,absen
+absence,absen
+abesence,absen
+absnc,absen
+besence,absen
+absenc,absen
+asence,absen
 lusa,lusa
 usa,lusa
 stu,satu
@@ -26,8 +32,11 @@ gjd,tidak jadi
 skuy,ayo
 lesgo,ayo
 mnh,kamu
+maneh,kamu
+maraneh,kalian
 mrnh,kalian
 urg,saya
+urang,saya
 kyk,seperti
 blom,belum
 cuti,cuti
@@ -36,6 +45,9 @@ krn,keren
 izin,izin
 batalin,batal
 cancel,batal
+kansel,batal
+kensel,batal
+cencel,batal
 mau,mau
 s/d,sampai dengan
 jan,januari
@@ -71,6 +83,13 @@ hr,hari
 jm,jam
 mnt,menit
 dtk,detik
+thankyou,terima kasih
+tenkiu,terima kasih
+tenq,terima kasih
+10q,terima kasih
+tgl,tanggal
+tangal,tanggal
+barbara,ikuyo
 3x,tiga kali
 aamiin,amin
 aamiinn,amin
