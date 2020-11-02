@@ -12,13 +12,14 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import load_model
 from sklearn.preprocessing import OneHotEncoder
 
+from ..typo_correction.spell_check_module import loadSpellCheck
 from .constants import *
 
 
 data = pd.read_csv(NLU_DATA_PATH)
 # use only 5 intents
 data = data[data['intent'].isin(INTENTS_USED)]
-model = load_model(MODEL_BEST_PATH)
+model = load_model(INTENT_MODEL_PATH)
 
 # Clean data:
 #   - Strip data from special characters
@@ -70,6 +71,11 @@ def initialize_predictor(text):
       intent_map[intent] = list(onehot_intent).index(1)
   
   # Clean the input text
+  spell_checker = loadSpellCheck(SPELL_CHECK_MODEL_PATH, SPELL_CHECK_DATA_PATH)
+  text = spell_checker.fix_sentence(text)
+
+  print("repaired sentence:", text)
+
   cleaned_text = re.sub(r'[^ a-z A-Z 0-9]', " ", text)
   test_word = word_tokenize(cleaned_text)
   test_word = [w.lower() for w in test_word]

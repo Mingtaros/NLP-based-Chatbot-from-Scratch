@@ -45,6 +45,7 @@ def get_ner_result(request): # TBD
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
   ner_prediction = predict_ner(data['text'])
+  print(ner_prediction)
 
   return JsonResponse({
     "status": HTTP_STATUS_OK,
