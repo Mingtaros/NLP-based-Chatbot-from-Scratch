@@ -48,3 +48,19 @@ RETURN BODY:
   ner: <list of entities found in text>
 }
 ```
+
+## Get Reply
+URL: <u>/chatbot/getReply</u>
+
+GET REQUEST PARAM:
+```
+text: <your text here>
+```
+
+RETURN BODY:
+```
+{
+  status,
+  reply,
+}
+```

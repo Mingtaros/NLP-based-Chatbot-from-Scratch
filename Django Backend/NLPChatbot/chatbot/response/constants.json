@@ -1,0 +1,11 @@
+{  
+  "bot_name": "Barbara",
+  "template_response": {
+    "thank_you": ["Sama-sama :)", "Tentu saja!", "Sama-samaa, kontak-kontak lagi yaa"],
+    "help": ["bot_name dapat melakukan hal-hal berikut lho:\n- Absen langsung dengan menyantumkan tanggal\n- Membalas terima kasihmu\n- Mengeluarkan bantuan untuk kamu\n- Membatalkan Request kamu"],
+    "cancel": ["Baik, sudah dibatalkan", "Batal deh", "Okee, bot_name batalkan yaa"],
+    "absence": ["bot_name berhasil mendaftarkan absensi anda pada tanggal ner_datetime yaa!"],
+    "fallback": ["Maaf kak, bot_name tidak mengerti apa yang kakak katakan :("],
+    "no_datetime": ["Maaf kak, bot_name tidak melihat tanggal pada absen yang ingin kakak berikan :("]
+  }
+}

@@ -6,14 +6,12 @@ import nltk
 from nltk import word_tokenize
 nltk.download('punkt')
 
-import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import load_model
 from sklearn.preprocessing import OneHotEncoder
 
-from ..typo_correction.spell_check_module import loadSpellCheck
-from .constants import *
+from ..constants import *
 
 
 data = pd.read_csv(NLU_DATA_PATH)
@@ -57,7 +55,7 @@ def create_tokenizer(words):
   return token
 
 
-def initialize_predictor(text):
+def initialize_predictor():
   # clean text data
   cleaned_text_data = clean_data(data['text'])
   tokenizer = create_tokenizer(cleaned_text_data)
@@ -69,21 +67,27 @@ def initialize_predictor(text):
   for intent, onehot_intent in zip(data['intent'].values, encoded_intent):
     if (intent not in intent_map):
       intent_map[intent] = list(onehot_intent).index(1)
-  
-  # Clean the input text
+
+  return max_length, tokenizer, intent_map
+
+
+# temp main
+max_length, tokenizer, intent_map = initialize_predictor()
+
+
+def clean_data(text, tokenizer):
+  # clean the input text
   cleaned_text = re.sub(r'[^ a-z A-Z 0-9]', " ", text)
-  spell_checker = loadSpellCheck(SPELL_CHECK_MODEL_PATH, SPELL_CHECK_DATA_PATH)
-  cleaned_text = spell_checker.fix_sentence(cleaned_text)
 
   test_word = word_tokenize(cleaned_text)
   test_word = [w.lower() for w in test_word]
   test_ls = tokenizer.texts_to_sequences(test_word)
-
-  return test_ls, max_length, intent_map
+  
+  return test_ls
 
 
 def predict_intent(text):
-  test_ls, max_length, intent_map = initialize_predictor(text)
+  test_ls = clean_data(text, tokenizer)
 
   # Check for unknown words
   if [] in test_ls:

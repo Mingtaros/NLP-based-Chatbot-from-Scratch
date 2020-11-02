@@ -5,9 +5,10 @@ from rest_framework import status
 
 import json
 
-from .ml_helper.constants import *
+from .constants import *
 from .ml_helper.intent_classifier import predict_intent
 from .ml_helper.ner_labeler import predict_ner
+from .response.response_helper import get_reply
 
 
 # Create your views here.
@@ -19,6 +20,7 @@ def index(request):
     })
   except Exception as e:
     return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(["GET"])
 def get_intent_from_chat(request):
@@ -36,18 +38,33 @@ def get_intent_from_chat(request):
     "intent_confidence": intent_ranking_prediction[chosen_intent],
     "intent_ranking": intent_ranking_prediction
   })
+  
 
 @api_view(["GET"])
-def get_ner_result(request): # TBD
+def get_ner_result(request):
   data = json.loads(json.dumps(request.query_params))
 
   if ('text' not in data):
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
   ner_prediction = predict_ner(data['text'])
-  print(ner_prediction)
 
   return JsonResponse({
     "status": HTTP_STATUS_OK,
     "ner": ner_prediction
+  })
+
+
+@api_view(["GET"])
+def get_response(request):
+  data = json.loads(json.dumps(request.query_params))
+
+  if ('text' not in data):
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+  reply = get_reply(data['text'])
+
+  return JsonResponse({
+    "status": HTTP_STATUS_OK,
+    "reply": reply
   })
