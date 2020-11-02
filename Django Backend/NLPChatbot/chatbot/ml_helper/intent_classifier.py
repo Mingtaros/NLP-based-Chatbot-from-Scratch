@@ -71,10 +71,10 @@ def initialize_predictor(text):
       intent_map[intent] = list(onehot_intent).index(1)
   
   # Clean the input text
-  spell_checker = loadSpellCheck(SPELL_CHECK_MODEL_PATH, SPELL_CHECK_DATA_PATH)
-  text = spell_checker.fix_sentence(text)
-
   cleaned_text = re.sub(r'[^ a-z A-Z 0-9]', " ", text)
+  spell_checker = loadSpellCheck(SPELL_CHECK_MODEL_PATH, SPELL_CHECK_DATA_PATH)
+  cleaned_text = spell_checker.fix_sentence(cleaned_text)
+
   test_word = word_tokenize(cleaned_text)
   test_word = [w.lower() for w in test_word]
   test_ls = tokenizer.texts_to_sequences(test_word)

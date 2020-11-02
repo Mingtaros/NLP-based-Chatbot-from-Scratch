@@ -73,8 +73,8 @@ def getIndex(data):
 def predict_ner(text):
   for i in range(NER_MAX_LEN - len(text.split(' '))):
     text += ' PADword'
-  # spell_checker = loadSpellCheck(SPELL_CHECK_MODEL_PATH, SPELL_CHECK_DATA_PATH)
-  # text = spell_checker.fix_sentence(text)
+  spell_checker = loadSpellCheck(SPELL_CHECK_MODEL_PATH, SPELL_CHECK_DATA_PATH)
+  text = spell_checker.fix_sentence(text)
 
   test_data = preprocessData(text)
   test_data = encodeXData([test_data])[0]
