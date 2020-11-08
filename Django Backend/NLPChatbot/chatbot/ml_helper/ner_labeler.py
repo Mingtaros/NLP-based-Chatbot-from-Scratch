@@ -1,20 +1,26 @@
 from .enamex_reader import read_enamex_file
 from ..constants import *
 
+import re
+import pickle
 import numpy as np
 import nltk
 from tensorflow.keras.models import load_model
 
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 
+tokenizer = Tokenizer(filters = '!"#$%&()*+,-./:;<=>?@[\]^_`{|}~')
+
+MAX_LEN = 10
 nltk.download('punkt')
 data_read = read_enamex_file(NER_DATA_PATH)
 model = load_model(NER_MODEL_PATH)
 
 def preprocessData(sentence):
-  result = ' '.join(sentence.lower().split('-'))
+  result = re.sub(r'[^ a-z A-Z 0-9]', " ", sentence.lower())
   result = nltk.word_tokenize(result)
   return result
-
 
 def changeDataFormat(data_read):
   x_data = []
@@ -41,15 +47,9 @@ def changeDataFormat(data_read):
 
 
 # Temp Main
-x, y = changeDataFormat(data_read)
-words = set([])
-for sentence in x:
-  for word in sentence:
-    words.add(word.lower())
-word2index = {w: i + 2 for i, w in enumerate(list(words))}
-word2index['PADword'] = 0
-word2index['OOVword'] = 1
-
+cleaned_x, y = changeDataFormat(data_read)
+with open(NER_TOKENIZER_PATH, 'rb') as handle:
+    tokenizer = pickle.load(handle)
 
 def encodeXData(x):
   new_x = []
@@ -71,15 +71,20 @@ def getIndex(data):
 
 
 def predict_ner(text):
-  for i in range(NER_MAX_LEN - len(text.split(' '))):
-    text += ' PADword'
-
   test_data = preprocessData(text)
-  test_data = encodeXData([test_data])[0]
-  pred = model.predict(test_data)
-  normalized_pred = [1 if a > 0.5 else 0 for a in pred]
-  labelled_token = []
-  for i, label in enumerate(normalized_pred):
+  test_data = tokenizer.texts_to_sequences(test_data)
+  oov_handler_data = []
+  for data in test_data:
+    if (len(data) == 0):
+      oov_handler_data.append(0)
+    else:
+      oov_handler_data.append(data[0])
+  padded_data = pad_sequences([oov_handler_data], maxlen=MAX_LEN, padding='post')
+  pred = model.predict(padded_data[0])
+  normalized_pred = [1 if a[0] > 0.5 else 0 for a in pred]
+
+  labelled_word = []
+  for token, label in zip(padded_data[0], normalized_pred):
     if label == 1:
-      labelled_token.append(getIndex(test_data[i]))
-  return labelled_token
+      labelled_word.append(token)
+  return tokenizer.sequences_to_texts([labelled_word])
