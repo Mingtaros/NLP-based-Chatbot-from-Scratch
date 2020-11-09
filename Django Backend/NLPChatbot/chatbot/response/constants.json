@@ -6,6 +6,6 @@
     "cancel": ["Baik, sudah dibatalkan", "Batal deh", "Okee, bot_name batalkan yaa"],
     "absence": ["bot_name berhasil mendaftarkan absensi anda pada tanggal ner_datetime yaa!"],
     "fallback": ["Maaf kak, bot_name tidak mengerti apa yang kakak katakan :("],
-    "no_datetime": ["Maaf kak, bot_name tidak melihat tanggal pada absen yang ingin kakak berikan :("]
+    "no_datetime": ["Pada tanggal berapa kak absensinya?"]
   }
 }
