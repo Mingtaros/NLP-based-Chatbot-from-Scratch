@@ -6,12 +6,18 @@ This task chatbot is based on 3 NLP modules,
 - Intent Classification
 - Named Entity Recognition
 
-While there are some mandatory ones like:
-- Replyer Response Builder
+Also there are some mandatory non-ML modules like:
+- Reply Building Mechanism
 
-Also some helpers like:
+To build the web app we used:
 - Django Backend
 - React Frontend
+
+## Notes
+For all of the NLP Modules, please open the notebooks provided in the directory to train and save the machine learning model, so that the model can be used in Backend loads.
+- Typo Correction Notebook is [here](Django%20Backend/NLPChatbot/chatbot/typo_correction/Typo_Correction_NLP.ipynb)
+- Intent Classification Notebook is [here](Intent%20Classification/Intent%20Classification%20Keras.ipynb)
+- NER Extraction Notebook is [here](NER%20Tanggal/NER_Tanggal.ipynb)
 
 ## Contributor
 - 13517013 / Aditya Putra Santosa

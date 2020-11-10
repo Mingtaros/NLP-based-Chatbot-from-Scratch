@@ -35,8 +35,10 @@ def get_reply(text):
 
     if chosen_intent == "absence":
       ner_prediction = predict_ner(text)
-      if (ner_prediction != []):
-        response = response.replace("ner_datetime", ner_prediction[0])
+      if ((ner_prediction != []) and ('' not in ner_prediction)):
+        ner_datetime = " dan ".join(ner_prediction)
+
+        response = response.replace("ner_datetime", ner_datetime)
       else: # Entity Undetected
         response = random.choice(response_constants["template_response"]["no_datetime"])
 
