@@ -4,8 +4,9 @@ Use it in your frontend or something
 
 ## How To Run
 1. Open NLPChatbot directory
-2. do `python manage.py runserver`
-3. open `localhost:8000` in your app
+2. do `python manage.py migrate` first before running the server 
+3. do `python manage.py runserver`
+4. open `localhost:8000` or `127.0.0.1:8000` in your app
 
 ## Intent Classification
 URL: <u>/chatbot/getIntent</u>
